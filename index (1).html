@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>FoxSport-Sayan</title>
+    <style>
+        :root {
+            --bg:#0b1220; 
+            --card:#0f1724; 
+            --accent:#f4b400; 
+            --muted:#9aa4b2;
+            font-family: Inter, system-ui, -apple-serif, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+        }
+
+        body {
+            margin: 0;
+            background: linear-gradient(180deg, #071027 0%, #071520 100%);
+            color: #e6eef6;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 880px;
+            background: rgba(255,255,255,0.02);
+            border-radius: 12px;
+            padding: 22px;
+            box-shadow: 0 8px 30px rgba(2,6,23,0.6);
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo {
+            width: 56px;
+            height: 56px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--accent), #ff7a18);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #071520;
+            font-weight: 700;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .logo:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(244, 180, 0, 0.7);
+        }
+
+        h1 { 
+            margin: 0; 
+            font-size: 20px; 
+            letter-spacing: 0.2px; 
+        }
+
+        .muted { 
+            color: var(--muted); 
+            font-size: 13px; 
+            margin-top: 6px; 
+        }
+
+        .actions { 
+            display: flex; 
+            gap: 8px; 
+            align-items: center; 
+        }
+
+        .btn {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.06);
+            padding: 8px 12px;
+            border-radius: 10px;
+            color: inherit;
+            text-decoration: none;
+            font-size: 14px;
+            transition: background 0.3s, border-color 0.3s, transform 0.1s;
+        }
+        .btn:hover {
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(255,255,255,0.2);
+            transform: translateY(-1px);
+        }
+        
+        footer {
+            margin-top: 16px;
+            color: var(--muted);
+            font-size: 13px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        @media (max-width:560px) {
+            header { 
+                flex-direction: column; 
+                align-items: flex-start; 
+                gap: 12px; 
+            }
+            .actions {
+                width: 100%; 
+                justify-content: space-around;
+            }
+            .btn {
+                flex-grow: 1;
+                text-align: center;
+            }
+        }
+
+        .video-container {
+            width: 100vw; 
+            margin-left: calc(50% - 50vw); 
+            padding: 0;
+            box-sizing: border-box;
+            background: #000;
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; 
+            height: 0;
+            overflow: hidden;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .channel-tabs {
+            display: flex; 
+            justify-content: center;
+            background: #202020;
+            margin-top: 10px;
+            border-radius: 8px;
+            overflow: hidden;
+            padding: 5px;
+        }
+        .tab-button {
+            width: 100%; 
+            max-width: 300px; 
+            padding: 15px 10px;
+            text-align: center;
+            cursor: pointer;
+            background-color: #1db954;
+            color: #0a0a0a;
+            border: none;
+            font-weight: 600;
+            transition: background-color 0.3s, color 0.3s;
+            border-radius: 5px; 
+            margin-bottom: 0; 
+        }
+        
+        .tab-button:hover { 
+            background-color: #1a9d4a;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+        }
+        
+        .tab-button.active {
+            background-color: #1db954; 
+            color: #0a0a0a;
+        }
+        .video-player {
+            display: none; 
+        }
+        .video-player.active {
+            display: block; 
+        }
+    </style>
+</head>
+<body>
+    <main class="container" role="main" aria-labelledby="site-title">
+        <header>
+            <div class="brand">
+                <div class="logo">FS</div>
+                <div>
+                    <h1 id="site-title">FoxSport-Sayan</h1>
+                    <div class="muted" style="font-size: 14px;">Live Streams</div>
+                </div>
+            </div>
+        </header>
+
+        <section class="channel-tabs" aria-label="Live Channel Selection">
+            <button class="tab-button" onclick="switchChannel('fox-sport')" style="cursor: default;">Fox Sports</button>
+        </section>
+
+        <section class="video-container" aria-label="Live Cricket Match Video Player">
+            <div class="video-wrapper">
+                <div id="fox-sport" class="video-player active">
+                    <iframe
+                        id="iframe-fox-sport"
+                        title="Fox Sports Player"
+                        frameborder="0"
+                        src=""
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+        </section>
+        
+        <footer>
+            <div>&copy; <span id="year"></span> All rights reserved by Sayan</div>
+        </footer>
+    </main>
+
+    <script>
+        const channelUrls = {
+            'fox-sport': 'https://cricketstan.github.io/Fox-Cricket-/',
+        };
+
+        function switchChannel(channelId) {
+            const videoPlayerDiv = document.getElementById(channelId);
+            const iframe = document.getElementById(`iframe-${channelId}`);
+
+            if (videoPlayerDiv && iframe) {
+                videoPlayerDiv.classList.add('active');
+                const url = channelUrls[channelId];
+                
+                if (iframe.src === "" || !iframe.src.includes(url)) {
+                    iframe.src = url;
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById("year").textContent = new Date().getFullYear();
+            switchChannel('fox-sport');
+        });
+    </script>
+</body>
+</html>
